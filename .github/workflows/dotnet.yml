@@ -1,0 +1,39 @@
+# Nome do workflow exibido na aba "Actions" do GitHub
+name: .NET
+
+# Define os gatilhos que iniciam o workflow
+on:
+  push:
+    # Executa o workflow em pushs enviados para o branch "main"
+    branches: [ "main" ]
+  pull_request:
+    # Executa o workflow em PRs direcionadas ao branch "main"
+    branches: [ "main" ]
+
+# Define o(s) job(s) que serão executados
+jobs:
+  build:
+    # Especifica o sistema operacional para o runner (máquina virtual que executa o job)
+    runs-on: ubuntu-latest
+
+    steps:
+      # Passo 1: Faz checkout do código do repositório na máquina do runner
+      - uses: actions/checkout@v4
+
+      # Passo 2: Instala o SDK do .NET na versão 8.0.x
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 8.0.x
+
+      # Passo 3: Restaura as dependências do projeto usando o arquivo .csproj/.sln
+      - name: Restore dependencies
+        run: dotnet restore
+
+      # Passo 4: Compila o projeto (sem restaurar novamente as dependências)
+      - name: Build
+        run: dotnet build --no-restore
+
+      # Passo 5: Executa os testes de unidade (sem compilar de novo)
+      - name: Test
+        run: dotnet test --no-build --verbosity normal
