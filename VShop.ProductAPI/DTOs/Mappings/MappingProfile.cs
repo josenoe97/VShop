@@ -11,6 +11,8 @@ namespace VShop.ProductAPI.DTOs.Mappings
 
             CreateMap<Product, ProductDTO>();
 
+            CreateMap< ProductDTO, Product>();
+
             CreateMap<Product, ProductDTO>()
                 .ForMember(x => x.CategoryName, opt => opt
                 .MapFrom(src => src.Category.Name)); // src => fonte
