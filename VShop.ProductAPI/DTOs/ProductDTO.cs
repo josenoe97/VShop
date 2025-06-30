@@ -25,6 +25,9 @@ namespace VShop.ProductAPI.DTOs
         [Range(1, 9999)]
         public long Stock { get; set; }
         public string? ImagemURL { get; set; }
+
+        public string? CategoryName { get; set; }
+
         [JsonIgnore]
         public CategoryDTO? Category { get; set; }
         public int CategoryId { get; set; }

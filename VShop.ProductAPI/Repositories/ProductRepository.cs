@@ -16,12 +16,17 @@ namespace VShop.ProductAPI.Repositories
 
         public async Task<IEnumerable<Product>> GetAllAsync()
         {
-            return await _context.Products.ToListAsync();
+            return await _context.Products
+                .Include(x => x.Category)
+                .ToListAsync();
         }
 
         public async Task<Product> GetByIdAsync(int id)
         {
-            return await _context.Products.Where(x => x.Id == id).FirstOrDefaultAsync();
+            return await _context.Products
+                .Include(x => x.Category)
+                .Where(x => x.Id == id)
+                .FirstOrDefaultAsync();
         }
 
         public async Task<Product> CreateAsync(Product product)
