@@ -46,7 +46,7 @@ namespace VShop.Web.Controllers
                 var result = await _productService.CreateProduct(productViewModel);
 
                 if(result is not null)
-                    return RedirectToAction(nameof(Index));
+                    return RedirectToAction(nameof(Index));  // redirecionada para index
             }
             else
             {
@@ -79,10 +79,32 @@ namespace VShop.Web.Controllers
                 var result = await _productService.UpdateProduct(productViewModel);
 
                 if(result is not null)
-                    return RedirectToAction(nameof(Index));
+                    return RedirectToAction(nameof(Index));  // redirecionada para index
             }
 
             return View(productViewModel);
+        }
+
+        [HttpGet]
+        public async Task<ActionResult<ProductViewModel>> DeleteProduct(int id)
+        {
+            var result = await _productService.FindProductById(id);
+
+            if (result is null)
+                return View("Error");
+
+            return View(result);
+        }
+
+        [HttpPost(), ActionName("DeleteProduct")]
+        public async Task<IActionResult> DeleteConfirmed(int id)
+        {
+            var result = await _productService.DeleteProductById(id);
+
+            if (!result)
+                return View("Error");
+
+            return RedirectToAction("Index"); // redirecionada para index
         }
     }
 }
