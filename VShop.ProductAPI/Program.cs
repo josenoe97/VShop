@@ -23,7 +23,7 @@ builder.Services.AddDbContext<AppDbContext>(options =>
                  options.UseMySql(mySqlConnection, 
                  ServerVersion.AutoDetect(mySqlConnection)));
 
-builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies()); 
 
 builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
 builder.Services.AddScoped<IProductRepository, ProductRepository>();
