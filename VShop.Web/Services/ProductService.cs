@@ -91,13 +91,13 @@ namespace VShop.Web.Services
             }
         }
 
-        public async Task<ProductViewModel> UpdateProduct(ProductViewModel productsViewModel)
+        public async Task<ProductViewModel> UpdateProduct(ProductViewModel productsViewModelUpdate)
         {
             var client = _httpClientFactory.CreateClient("ProductAPI");
 
             ProductViewModel productUpdated = new ProductViewModel();
 
-            using (var response = await client.PutAsJsonAsync(apiEndpoint, productViewModel))
+            using (var response = await client.PutAsJsonAsync(apiEndpoint, productsViewModelUpdate))
             {
                 if (response.IsSuccessStatusCode)
                 {
