@@ -54,7 +54,7 @@ namespace VShop.Web.Services
                 {
                     var apiResponse = await response.Content.ReadAsStreamAsync();
 
-                    var productViewModel = await JsonSerializer
+                    productViewModel = await JsonSerializer
                         .DeserializeAsync<ProductViewModel>(apiResponse, _options);
                 }
                 else

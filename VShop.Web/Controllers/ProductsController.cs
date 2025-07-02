@@ -17,7 +17,7 @@ namespace VShop.Web.Controllers
             _categoryService = categoryService;
         }
 
-        [HttpGet]
+        [HttpGet] // entrando na tela de apresentação de todos os produtos
         public async Task<ActionResult<IEnumerable<ProductViewModel>>> Index()
         {
             var result = await _productService.GetAllProducts();
@@ -29,7 +29,7 @@ namespace VShop.Web.Controllers
         }
 
         
-        [HttpGet]
+        [HttpGet] // entrando na tela para criar um novo produto
         public async Task<ActionResult> CreateProduct()
         {
             ViewBag.CategoryId = new SelectList(await
@@ -57,7 +57,7 @@ namespace VShop.Web.Controllers
             return View(productViewModel);
         }
 
-        [HttpGet]
+        [HttpGet] // entrando na tela de edição de produtos
         public async Task<IActionResult> UpdateProduct(int id)
         {
             ViewBag.CategoryId = new SelectList(await
