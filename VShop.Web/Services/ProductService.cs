@@ -80,7 +80,7 @@ namespace VShop.Web.Services
                     var apiResponse = await response.Content.ReadAsStreamAsync();
 
                     productViewModel = await JsonSerializer
-                        .DeserializeAsync<ProductViewModel>(apiResponse, _options);
+                        .DeserializeAsync<ProductViewModel>(apiResponse, _options); //
                 }
                 else
                 {

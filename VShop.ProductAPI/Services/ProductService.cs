@@ -20,7 +20,7 @@ namespace VShop.ProductAPI.Services
         {
             var productsEntity = await _productRepository.GetAllAsync();
 
-            return _mapper.Map<IEnumerable<ProductDTO>>(produc
+            return _mapper.Map<IEnumerable<ProductDTO>>(productsEntity);
         }
 
         public async Task<ProductDTO> GetProductByIdAsync(int id)
