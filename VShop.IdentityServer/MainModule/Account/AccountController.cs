@@ -2,7 +2,7 @@
 // See LICENSE in the project root for license information.
 
 
-using IdentityModel;
+using Duende.IdentityModel;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -17,6 +17,7 @@ using Duende.IdentityServer.Models;
 using Duende.IdentityServer.Services;
 using Duende.IdentityServer.Stores;
 using Duende.IdentityServer.Test;
+using Microsoft.AspNetCore.Authentication;
 
 namespace IdentityServerHost.Quickstart.UI
 {
@@ -351,13 +352,13 @@ namespace IdentityServerHost.Quickstart.UI
                 SignOutIframeUrl = logout?.SignOutIFrameUrl,
                 LogoutId = logoutId
             };
-
+/*
             if (User?.Identity.IsAuthenticated == true)
             {
                 var idp = User.FindFirst(JwtClaimTypes.IdentityProvider)?.Value;
                 if (idp != null && idp != Duende.IdentityServer.IdentityServerConstants.LocalIdentityProvider)
                 {
-                    var providerSupportsSignout = await HttpContext.GetSchemeSupportsSignOutAsync(idp);
+                    var providerSupportsSignout = await HttpContext.(idp);
                     if (providerSupportsSignout)
                     {
                         if (vm.LogoutId == null)
@@ -371,7 +372,7 @@ namespace IdentityServerHost.Quickstart.UI
                         vm.ExternalAuthenticationScheme = idp;
                     }
                 }
-            }
+            }*/
 
             return vm;
         }
