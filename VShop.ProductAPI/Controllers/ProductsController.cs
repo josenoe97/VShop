@@ -1,12 +1,15 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using VShop.ProductAPI.DTOs;
+using VShop.ProductAPI.Roles;
 using VShop.ProductAPI.Services.Interface;
 
 namespace VShop.ProductAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class ProductsController : ControllerBase
     {
         private readonly IProductService _productService; 
@@ -59,7 +62,8 @@ namespace VShop.ProductAPI.Controllers
             return Ok(produtoDto);
         }
 
-        [HttpDelete("{id}")] 
+        [HttpDelete("{id}")]
+        [Authorize(Roles = Role.Admin)]
         public async Task<ActionResult<ProductDTO>> Delete(int id)
         {
             var produtoDto = await _productService.GetProductByIdAsync(id);
