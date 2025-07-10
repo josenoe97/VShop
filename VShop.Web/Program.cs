@@ -26,7 +26,7 @@ builder.Services.AddAuthentication(options =>
         options.Authority = builder.Configuration["ServiceUri:IdentityServer"];
         options.GetClaimsFromUserInfoEndpoint = true;
         options.ClientId = "vshop";
-        options.ClientSecret = builder.Configuration["Client:Secret"];
+        options.ClientSecret = builder.Configuration["Client:Secrete"];
         options.ResponseType = "code";
         options.ClaimActions.MapJsonKey("role", "role", "role");
         options.ClaimActions.MapJsonKey("sub", "sub", "sub");
@@ -54,8 +54,7 @@ app.UseRouting();
 
 
 
-app.UseAuthorization();
-
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllerRoute(
