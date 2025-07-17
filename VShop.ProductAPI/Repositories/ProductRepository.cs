@@ -50,6 +50,7 @@ namespace VShop.ProductAPI.Repositories
             var product = await GetByIdAsync(id);
 
             _context.Products.Remove(product);
+            await _context.SaveChangesAsync();
 
             return product;
         }

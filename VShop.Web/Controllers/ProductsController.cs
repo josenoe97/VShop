@@ -1,10 +1,13 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using VShop.Web.Models;
+using VShop.Web.Roles;
 using VShop.Web.Services.Contracts;
 
 namespace VShop.Web.Controllers
 {
+    [Authorize(Roles = Role.Admin)]
     public class ProductsController : Controller
     {
         private readonly IProductService _productService;
@@ -39,6 +42,7 @@ namespace VShop.Web.Controllers
         }
 
         [HttpPost]
+        [Authorize]
         public async Task<ActionResult> CreateProduct(ProductViewModel productViewModel)
         {
             if (ModelState.IsValid)
@@ -46,7 +50,7 @@ namespace VShop.Web.Controllers
                 var result = await _productService.CreateProduct(productViewModel);
 
                 if(result is not null)
-                    return RedirectToAction(nameof(Index));
+                    return RedirectToAction(nameof(Index));  // redirecionada para index
             }
             else
             {
@@ -72,6 +76,7 @@ namespace VShop.Web.Controllers
         }
 
         [HttpPost]
+        [Authorize]
         public async Task<IActionResult> UpdateProduct(ProductViewModel productViewModel)
         {
             if (ModelState.IsValid)
@@ -79,10 +84,34 @@ namespace VShop.Web.Controllers
                 var result = await _productService.UpdateProduct(productViewModel);
 
                 if(result is not null)
-                    return RedirectToAction(nameof(Index));
+                    return RedirectToAction(nameof(Index));  // redirecionada para index
             }
 
             return View(productViewModel);
+        }
+
+        [HttpGet]
+        [Authorize]
+        public async Task<ActionResult<ProductViewModel>> DeleteProduct(int id)
+        {
+            var result = await _productService.FindProductById(id);
+
+            if (result is null)
+                return View("Error");
+
+            return View(result);
+        }
+
+        [HttpPost(), ActionName("DeleteProduct")]
+        [Authorize(Roles = Role.Admin)]
+        public async Task<IActionResult> DeleteConfirmed(int id)
+        {
+            var result = await _productService.DeleteProductById(id);
+
+            if (!result)
+                return View("Error");
+
+            return RedirectToAction("Index"); // redirecionada para index
         }
     }
 }
